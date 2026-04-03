@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body style="text-align:center; font-family:Arial;">
+  <h2 id="captcha">Loading...</h2>
+  <input type="text" id="input" placeholder="Nhập captcha">
+  <br><br>
+  <button onclick="checkCaptcha()">Xác nhận</button>
+
+<script>
+let code;
+
+function generateCaptcha(){
+  code = Math.random().toString(36).substring(2,6).toUpperCase();
+  document.getElementById("captcha").innerText = code;
+}
+
+function checkCaptcha(){
+  let input = document.getElementById("input").value;
+  if(input === code){
+    alert("Đúng rồi!");
+  } else {
+    alert("Sai captcha!");
+  }
+}
+
+generateCaptcha();
+</script>
+</body>
+</html>
