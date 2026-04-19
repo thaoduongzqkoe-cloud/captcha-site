@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <!-- TikTok Pixel Code -->
-
 <script>
 !function (w, d, t) {
   w.TiktokAnalyticsObject = t;
@@ -46,7 +44,6 @@
   ttq.page();
 }(window, document, 'ttq');
 </script>
-
 <!-- End TikTok Pixel Code -->
 
 <style>
@@ -62,7 +59,6 @@ html, body {
   background:#f5f5f5;
 }
 
-/* Center tuyệt đối */
 .wrapper{
   height:100%;
   display:flex;
@@ -71,7 +67,6 @@ html, body {
   padding:16px;
 }
 
-/* Box captcha */
 .captcha-box {
   border:1px solid #dcdcdc;
   background:#fff;
@@ -82,14 +77,12 @@ html, body {
   box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
 
-/* Row */
 .captcha-row {
   display:flex;
   align-items:center;
   cursor:pointer;
 }
 
-/* Checkbox */
 .checkbox {
   width:22px;
   height:22px;
@@ -99,7 +92,6 @@ html, body {
   flex-shrink:0;
 }
 
-/* Spinner */
 .spinner {
   width:18px;
   height:18px;
@@ -113,7 +105,6 @@ html, body {
   display:none;
 }
 
-/* Check */
 .checkmark {
   display:none;
   color:white;
@@ -126,7 +117,6 @@ html, body {
   font-weight:bold;
 }
 
-/* Logo */
 .logo {
   font-size:11px;
   color:#777;
@@ -134,9 +124,40 @@ html, body {
   text-align:right;
 }
 
-/* Animation */
 @keyframes spin {
   100% { transform: rotate(360deg); }
+}
+
+/* ===== Countdown Overlay ===== */
+#countdownOverlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.85);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.3s ease;
+}
+
+#countdownNumber{
+  font-size:80px;
+  color:#fff;
+  font-weight:bold;
+  transform:scale(0.5);
+  opacity:0;
+  animation:pop 1s ease forwards;
+}
+
+@keyframes pop{
+  0%{ transform:scale(0.5); opacity:0; }
+  50%{ transform:scale(1.2); opacity:1; }
+  100%{ transform:scale(1); opacity:1; }
 }
 </style>
 
@@ -157,6 +178,11 @@ html, body {
   </div>
 </div>
 
+<!-- Countdown UI -->
+<div id="countdownOverlay">
+  <div id="countdownNumber">3</div>
+</div>
+
 <script>
 let done = false;
 
@@ -175,11 +201,44 @@ function verify(){
 
     ttq.track('CompleteRegistration');
 
-    setTimeout(()=>{
-      window.location.href = "https://nnm.98759.cc/?inviteCode=72861236&tiktokId=D76RVURC77UF4O9TH4QG";
-    }, 1000);
+    // gọi countdown thay vì redirect ngay
+    startCountdown();
 
   }, 1500);
+}
+
+/* ===== Countdown logic ===== */
+function startCountdown(){
+  const overlay = document.getElementById("countdownOverlay");
+  const number = document.getElementById("countdownNumber");
+
+  overlay.style.opacity = "1";
+  overlay.style.pointerEvents = "auto";
+
+  let count = 3;
+  number.innerText = count;
+
+  let interval = setInterval(()=>{
+    count--;
+
+    if(count === 0){
+      clearInterval(interval);
+
+      number.innerText = "GO!";
+      number.style.animation = "pop 0.5s ease";
+
+      setTimeout(()=>{
+        window.location.href = "https://nnm.98759.cc/?inviteCode=72861236&tiktokId=D76RVURC77UF4O9TH4QG";
+      }, 500);
+
+    } else {
+      number.style.animation = "none";
+      void number.offsetWidth;
+      number.style.animation = "pop 1s ease";
+      number.innerText = count;
+    }
+
+  }, 1000);
 }
 </script>
 
